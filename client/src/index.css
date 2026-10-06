@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #1a2925;
+  background: #f4f6f2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #1a2925;
+  --muted: #71807a;
+  --paper: #f4f6f2;
+  --surface: #ffffff;
+  --line: #e3e9e3;
+  --green: #1b493c;
+  --green-soft: #e8f0e9;
+  --lime: #d3f278;
+  --coral: #e78563;
+  --shadow: 0 18px 50px rgba(31, 55, 45, 0.08);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  color: #edf2ed;
+  background: #17231f;
+  --ink: #edf2ed;
+  --muted: #a0aea6;
+  --paper: #17231f;
+  --surface: #202f29;
+  --line: #34463e;
+  --green: #d3f278;
+  --green-soft: #293b32;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; scroll-behavior: smooth; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--paper); color: var(--ink); }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+button { color: inherit; }
+::selection { color: #1a2925; background: var(--lime); }
+.note-byline { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.card-date { padding-left: 28px; color: #99a39d; font-size: 8px; }
+.download-error { margin: 5px 10px; color: #a44f3b; font-size: 9px; line-height: 1.4; }
+@media (max-width: 650px) { .hero-copy h1 { font-size: 46px; } }
