@@ -56,7 +56,7 @@ Copy `.env.example` to `.env` in the repository root. Keep `.env` private; it is
 | `CLOUDINARY_API_SECRET` | Yes for uploads | Cloudinary API secret. |
 | `CLIENT_URL` | For deployment | Allowed browser origin; defaults to `http://localhost:5173`. |
 | `PORT` | No | API port; defaults to `5000`. |
-| `VITE_API_URL` | No | API base URL; defaults to `http://localhost:5000/api`. |
+| `VITE_API_URL` | Yes in production | Public API base URL, ending in `/api`; defaults to `http://localhost:5000/api` only during local development. |
 | `ADMIN_API_KEY` | No | Enables the protected note-delete endpoint when configured. |
 
 ## Local Development
@@ -114,7 +114,9 @@ Create a Cloudinary account and copy the cloud name, API key, and API secret fro
 
 ## Deployment
 
-Deploy the client and API as separate services or behind a reverse proxy. Build the client with `npm --prefix client run build` and serve `client/dist` using a static hosting provider. Run the API with `npm --prefix server start`; set its production MongoDB and Cloudinary variables, and set `CLIENT_URL` to the deployed client origin. Set `VITE_API_URL` to the deployed API's `/api` URL at client build time. Use HTTPS, restrict MongoDB network access, and store secrets in the hosting provider's secret manager. The API's note deletion route is disabled until `ADMIN_API_KEY` is set.
+Deploy the client and API as separate services or behind a reverse proxy. For a Vercel client deployment, deploy the Express API to a Node.js host that supports a persistent Express app, then set `VITE_API_URL` in the Vercel project's Environment Variables to the public API URL ending in `/api` (for example, `https://your-api.example.com/api`) and redeploy the client. Set the API host's `MONGODB_URI`, Cloudinary credentials, and `CLIENT_URL` to the deployed Vercel site origin (for example, `https://your-project.vercel.app`). Vite embeds `VITE_API_URL` during the build, so changing it requires a new deployment. Do not put database or Cloudinary secrets in Vercel client variables. Use HTTPS, restrict MongoDB network access, and store secrets in the API host's secret manager. The API's note deletion route is disabled until `ADMIN_API_KEY` is set.
+
+The client cannot save notes by itself: the API must be online and connected to MongoDB and Cloudinary. If the API is deployed as a Vercel Function, account for Vercel's request-body limit, which is lower than this project's 15 MB upload limit; larger uploads should go directly to Cloudinary or use a host with a suitable request limit.
 
 ## Future Improvements
 
